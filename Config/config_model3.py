@@ -23,13 +23,14 @@ class Config:
 
     def _set_hyperparameters(self):
         """Define all hyperparameters."""
-        self._batch_size = 128
-        self._learning_rate = 0.001
-        self._epochs = 30
+        self._batch_size = 64
+        self._learning_rate = 0.00001
+        self._epochs = 100
         self._valdata_ratio = 0.3
         self._width_transform=64
         self._height_transform=64
-
+        self._dropout=0.5
+        
     def _set_model_parameters(self):
         """Define model-specific parameters."""
         self._NUM_CLASSES = 5
@@ -59,7 +60,8 @@ class Config:
             "epochs": self._epochs,
             "valdata_ratio": self._valdata_ratio,
             "height_transform": self._height_transform,
-            "width_transform": self._width_transform
+            "width_transform": self._width_transform,
+            "drop_out":self._dropout
         }
 
     @property

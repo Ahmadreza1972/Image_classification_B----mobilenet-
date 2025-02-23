@@ -2,14 +2,14 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import matplotlib.pyplot as plt
-from CustomResNet18 import CustomResNet18
+from mobilenet import MobileNetV2ForCIFAR8M
 from DataLoad import DataLoad
 from train import Train
 from test import Test
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
-from Config.config_model3 import Config
+from Config.config_model2 import Config
 from Log import Logger
 
 class ModelProcess:
@@ -33,6 +33,8 @@ class ModelProcess:
         self._valdata_ratio=self._config1.hyperparameters["valdata_ratio"]
         self._width_transform=self._config1.hyperparameters["width_transform"]
         self._height_transform=self._config1.hyperparameters["height_transform"]
+        self._drop_out=self._config1.hyperparameters["drop_out"]
+
         
         
         # set parameters
@@ -74,7 +76,7 @@ class ModelProcess:
 
         # Initialize model
         self._log.log("Initializing the model...")
-        model = CustomResNet18(num_classes=self._num_classes, freeze_layers=False)
+        model=MobileNetV2ForCIFAR8M(self._num_classes,self._height_transform,self._width_transform,self._drop_out)
         trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         self._log.log(f"Model initialized with {trainable_params:,} trainable parameters.")
 

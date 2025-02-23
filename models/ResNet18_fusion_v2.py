@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-from CustomResNet18 import CustomResNet18
+from mobilenet import MobileNetV2ForCIFAR8M
 from DataLoad import DataLoad
 from tqdm import tqdm
 import numpy as np
@@ -47,6 +47,7 @@ class ModelProcess:
         self._valdata_ratio=self._config1.hyperparameters["valdata_ratio"]
         self._width_transform=self._config1.hyperparameters["width_transform"]
         self._height_transform=self._config1.hyperparameters["height_transform"]
+        self._drop_out=self._config1.hyperparameters["drop_out"]
         
         # set parameters
         self._num_classes=self._config1.model_parameters["num_classes"]
@@ -59,7 +60,8 @@ class ModelProcess:
         # Show the image
         img = img.permute(1, 2, 0)
         plt.imshow(img)
-        plt.title(f"orginal:{self._group_labels[act_label]} predicted:{self._group_labels[pre_label]}")
+        #plt.title(f"orginal:{self._group_labels[act_label]} predicted:{self._group_labels[pre_label]}")
+        plt.title(f"orginal:{act_label} predicted:{pre_label}")
         plt.axis("off")  # Remove axes
         #plt.show()
         
@@ -161,7 +163,7 @@ class ModelProcess:
 
         # Initialize model
         self._log.log("Initializing the model...")
-        model = CustomResNet18(num_classes=self._num_classes, freeze_layers=False)
+        model=MobileNetV2ForCIFAR8M(self._num_classes,self._height_transform,self._width_transform,self._drop_out)
         
         for id,path in enumerate(self._models_weights_path):
         
@@ -233,8 +235,8 @@ class ModelProcess:
             
             images, labels = next(data_iter)  # Fetch a batch
             image = images[row % len(images)]
-            #if row % 100 ==0:
-                #self.save_result(image,labels,predictedlabel,row)
+            if row % 100 ==0:
+                self.save_result(image,labels,predictedlabel,row)
             
             
             total_row+=1

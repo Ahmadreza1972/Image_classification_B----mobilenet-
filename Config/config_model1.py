@@ -23,13 +23,13 @@ class Config:
 
     def _set_hyperparameters(self):
         """Define all hyperparameters."""
-        self._batch_size = 128
-        self._learning_rate = 0.0005
-        self._epochs = 15
+        self._batch_size = 64
+        self._learning_rate = 0.0001
+        self._epochs = 25
         self._valdata_ratio = 0.3
         self._width_transform=64
         self._height_transform=64
-        self._dropout=0.5
+        self._dropout=0.9
 
     def _set_model_parameters(self):
         """Define model-specific parameters."""
