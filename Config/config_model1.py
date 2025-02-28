@@ -29,7 +29,7 @@ class Config:
         self._valdata_ratio = 0.3
         self._width_transform=64
         self._height_transform=64
-        self._dropout=0.9
+        self._dropout=0.7
 
     def _set_model_parameters(self):
         """Define model-specific parameters."""

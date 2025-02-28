@@ -18,7 +18,9 @@ class MobileNetV2ForCIFAR8M(nn.Module):
             self.mobilenet_v2.features[1],  
             self.mobilenet_v2.features[2],  
             self.mobilenet_v2.features[3],  
-            self.mobilenet_v2.features[4]
+            self.mobilenet_v2.features[4],
+            self.mobilenet_v2.features[5],
+            self.mobilenet_v2.features[6]
         )
         
         # Calculate the output size after the truncated feature extractor
